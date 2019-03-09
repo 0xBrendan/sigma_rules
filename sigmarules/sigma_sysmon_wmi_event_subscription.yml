@@ -1,0 +1,15 @@
+alert:
+- debug
+description: Detects creation of WMI event subscription persistence method
+filter:
+- query:
+    query_string:
+      query: event_id:("19" "20" "21")
+index: logs-endpoint-winevent-sysmon-*
+name: WMI-Event-Subscription_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

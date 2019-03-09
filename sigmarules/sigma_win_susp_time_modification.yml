@@ -1,0 +1,18 @@
+alert:
+- debug
+description: Detect scenarios where a potentially unauthorized application or user
+  is modifying the system time.
+filter:
+- query:
+    query_string:
+      query: (event_id:"4616" AND NOT (((process_path:"C\:\\Program\ Files\\VMware\\VMware\
+        Tools\\vmtoolsd.exe" OR process_path:"C\:\\Windows\\System32\\VBoxService.exe")
+        OR (process_path:"C\:\\Windows\\System32\\svchost.exe" AND SubjectUserSid:"S\-1\-5\-19"))))
+index: logs-endpoint-winevent-security-*
+name: Unauthorized-System-Time-Modification_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

@@ -1,0 +1,16 @@
+alert:
+- debug
+description: This rule triggers on user accounts that are added to the local Administrators
+  group, which could be legitimate activity or a sign of privilege escalation activity
+filter:
+- query:
+    query_string:
+      query: ((event_id:"4732" AND group_name:"Administrators") AND NOT (SubjectUserName.keyword:*$))
+index: logs-endpoint-winevent-security-*
+name: User-Added-to-Local-Administrators_0
+priority: 4
+realert:
+  minutes: 0
+type: any
+
+

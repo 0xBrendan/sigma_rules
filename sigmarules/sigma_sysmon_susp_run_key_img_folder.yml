@@ -1,0 +1,19 @@
+alert:
+- debug
+description: Detects suspicious new RUN key element pointing to an executable in a
+  suspicious folder
+filter:
+- query:
+    query_string:
+      query: (event_id:"13" AND registry_key_path.keyword:(*\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\*
+        *\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce\\*) AND registry_key_value.keyword:(C\:\\Windows\\Temp\\*
+        *\\AppData\\* C\:\\$Recycle.bin\\* C\:\\Temp\\* C\:\\Users\\Public\\* C\:\\Users\\Default\\*
+        C\:\\Users\\Desktop\\*))
+index: logs-endpoint-winevent-sysmon-*
+name: New-RUN-Key-Pointing-to-Suspicious-Folder_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

@@ -1,0 +1,21 @@
+alert:
+- debug
+description: Detects various anomalies in relation to regsvr32.exe
+filter:
+- query:
+    query_string:
+      query: ((process_path.keyword:*\\regsvr32.exe AND process_command_line.keyword:*\\Temp\\*)
+        OR (process_path.keyword:*\\regsvr32.exe AND process_parent_path.keyword:*\\powershell.exe)
+        OR (process_path.keyword:*\\regsvr32.exe AND process_command_line.keyword:(*\/i\:http*\
+        scrobj.dll *\/i\:ftp*\ scrobj.dll)) OR (process_path.keyword:*\\wscript.exe
+        AND process_parent_path.keyword:*\\regsvr32.exe) OR (process_path.keyword:*\\EXCEL.EXE
+        AND process_command_line.keyword:*..\\..\\..\\Windows\\System32\\regsvr32.exe\
+        *))
+index: logs-*
+name: Regsvr32-Anomaly_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

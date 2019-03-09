@@ -1,0 +1,17 @@
+alert:
+- debug
+description: Detects WMI executing suspicious commands
+filter:
+- query:
+    query_string:
+      query: (process_path.keyword:(*\\wmic.exe) AND process_command_line.keyword:(*\/NODE\:*process\
+        call\ create\ * *\ path\ AntiVirusProduct\ get\ * *\ path\ FirewallProduct\
+        get\ * *\ shadowcopy\ delete\ *))
+index: logs-*
+name: Suspicious-WMI-execution_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

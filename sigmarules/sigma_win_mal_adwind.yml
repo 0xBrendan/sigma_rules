@@ -1,0 +1,46 @@
+alert:
+- debug
+description: Detects javaw.exe in AppData folder as used by Adwind / JRAT
+filter:
+- query:
+    query_string:
+      query: ProcessCommandLine.keyword:(*\\AppData\\Roaming\\Oracle*\\java*.exe\
+        * *cscript.exe\ *Retrive*.vbs\ *)
+index: logs-*
+name: Adwind-RAT-/-JRAT_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+alert:
+- debug
+description: Detects javaw.exe in AppData folder as used by Adwind / JRAT
+filter:
+- query:
+    query_string:
+      query: (event_id:"11" AND file_name.keyword:(*\\AppData\\Roaming\\Oracle\\bin\\java*.exe
+        *\\Retrive*.vbs))
+index: logs-endpoint-winevent-sysmon-*
+name: Adwind-RAT-/-JRAT-2_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+alert:
+- debug
+description: Detects javaw.exe in AppData folder as used by Adwind / JRAT
+filter:
+- query:
+    query_string:
+      query: (event_id:"13" AND registry_key_path.keyword:\\REGISTRY\\MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run*
+        AND registry_key_value:"%AppData%\\Roaming\\Oracle\\bin\\*")
+index: logs-endpoint-winevent-sysmon-*
+name: Adwind-RAT-/-JRAT-3_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

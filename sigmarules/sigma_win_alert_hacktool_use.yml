@@ -1,0 +1,16 @@
+alert:
+- debug
+description: This method detects well-known keywords, certain field combination that
+  appear in Windows Eventlog when certain hack tools are used
+filter:
+- query:
+    query_string:
+      query: (event_id:("4776" "4624" "4625") AND src_host_name:"RULER")
+index: logs-endpoint-winevent-security-*
+name: Hacktool-Use_0
+priority: 1
+realert:
+  minutes: 0
+type: any
+
+

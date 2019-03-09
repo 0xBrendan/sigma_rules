@@ -1,0 +1,18 @@
+alert:
+- debug
+description: Detects a Windows command line executable started from MSHTA.
+filter:
+- query:
+    query_string:
+      query: ((process_parent_path.keyword:*\\mshta.exe AND process_path.keyword:(*\\cmd.exe
+        *\\powershell.exe *\\wscript.exe *\\cscript.exe *\\sh.exe *\\bash.exe *\\reg.exe
+        *\\regsvr32.exe *\\BITSADMIN*)) AND NOT (process_command_line.keyword:(*\/HP\/HP*
+        *\\HP\\HP*)))
+index: logs-*
+name: MSHTA-Spawning-Windows-Shell_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

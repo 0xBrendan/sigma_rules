@@ -1,0 +1,20 @@
+alert:
+- debug
+description: Detects a Powershell process that opens network connections - check for
+  suspicious target ports and target systems - adjust to your environment (e.g. extend
+  filters with company's ip range')
+filter:
+- query:
+    query_string:
+      query: ((event_id:"3" AND process_path.keyword:*\\powershell.exe) AND NOT (dst_ip_addr.keyword:(10.*
+        192.168.* 172.16.* 172.17.* 172.18.* 172.19.* 172.20.* 172.21.* 172.22.* 172.23.*
+        172.24.* 172.25.* 172.26.* 172.27.* 172.28.* 172.29.* 172.30.* 172.31.* 127.0.0.1)
+        AND dst_is_ipv6:"false" AND user_account:"NT\ AUTHORITY\\SYSTEM"))
+index: logs-endpoint-winevent-sysmon-*
+name: PowerShell-Network-Connections_0
+priority: 4
+realert:
+  minutes: 0
+type: any
+
+

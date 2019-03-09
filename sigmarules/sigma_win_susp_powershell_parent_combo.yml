@@ -1,0 +1,17 @@
+alert:
+- debug
+description: Detects suspicious powershell invocations from interpreters or unusual
+  programs
+filter:
+- query:
+    query_string:
+      query: ((process_parent_path.keyword:(*\\wscript.exe *\\cscript.exe) AND process_path.keyword:(*\\powershell.exe))
+        AND NOT (process_current_directory.keyword:*\\Health\ Service\ State\\*))
+index: logs-*
+name: Suspicious-PowerShell-Invocation-based-on-Parent-Process_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

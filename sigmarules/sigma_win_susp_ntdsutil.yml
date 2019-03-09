@@ -1,0 +1,16 @@
+alert:
+- debug
+description: Detects execution of ntdsutil.exe, which can be used for various attacks
+  against the NTDS database (NTDS.DIT)
+filter:
+- query:
+    query_string:
+      query: process_command_line.keyword:*\\ntdsutil*
+index: logs-*
+name: Invocation-of-Active-Directory-Diagnostic-Tool-ntdsutil.exe_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

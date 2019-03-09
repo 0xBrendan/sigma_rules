@@ -1,0 +1,17 @@
+alert:
+- debug
+description: Detects remote thread creation from CACTUSTORCH as described in references.
+filter:
+- query:
+    query_string:
+      query: (event_id:"8" AND process_path.keyword:(*\\System32\\cscript.exe *\\System32\\wscript.exe
+        *\\System32\\mshta.exe *\\winword.exe *\\excel.exe) AND target_process_path.keyword:*\\SysWOW64\\*
+        AND NOT _exists_:thread_start_module)
+index: logs-endpoint-winevent-sysmon-*
+name: CACTUSTORCH-Remote-Thread-Creation_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

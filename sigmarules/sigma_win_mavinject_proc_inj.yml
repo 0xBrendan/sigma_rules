@@ -1,0 +1,15 @@
+alert:
+- debug
+description: Detects process injection using the signed Windows tool Mavinject32.exe
+filter:
+- query:
+    query_string:
+      query: process_command_line.keyword:*\ \/INJECTRUNNING\ *
+index: logs-*
+name: MavInject-Process-Injection_0
+priority: 1
+realert:
+  minutes: 0
+type: any
+
+

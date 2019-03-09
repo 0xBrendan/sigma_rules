@@ -1,0 +1,18 @@
+alert:
+- debug
+description: Detects activity as "net user administrator /domain" and "net group domain
+  admins /domain"
+filter:
+- query:
+    query_string:
+      query: (event_id:"4661" AND object_access_mask_requested:"0x2d" AND ((object_type:"SAM_USER"
+        AND object_name.keyword:S\-1\-5\-21\-*\-500) OR (object_type:"SAM_GROUP" AND
+        object_name.keyword:S\-1\-5\-21\-*\-512)))
+index: logs-endpoint-winevent-security-*
+name: Reconnaissance-Activity_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

@@ -1,0 +1,20 @@
+alert:
+- debug
+description: Detects a suspicious Microsoft certutil execution with sub commands like
+  'decode' sub command, which is sometimes used to decode malicious code with the
+  built-in certutil utility
+filter:
+- query:
+    query_string:
+      query: process_command_line.keyword:(*\ \-decode\ * *\ \/decode\ * *\ \-decodehex\
+        * *\ \/decodehex\ * *\ \-urlcache\ * *\ \/urlcache\ * *\ \-verifyctl\ * *\
+        \/verifyctl\ * *\ \-encode\ * *\ \/encode\ * *certutil*\ \-URL* *certutil*\
+        \/URL* *certutil*\ \-ping* *certutil*\ \/ping*)
+index: logs-*
+name: Suspicious-Certutil-Command_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

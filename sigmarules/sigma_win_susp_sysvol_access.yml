@@ -1,0 +1,15 @@
+alert:
+- debug
+description: Detects Access to Domain Group Policies stored in SYSVOL
+filter:
+- query:
+    query_string:
+      query: process_command_line.keyword:*\\SYSVOL\\*\\policies\\*
+index: logs-*
+name: Suspicious-SYSVOL-Domain-Group-Policy-Access_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

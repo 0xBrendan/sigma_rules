@@ -1,0 +1,17 @@
+alert:
+- debug
+description: Web servers that spawn shell processes could be the result of a successfully
+  placed web shell or an other attack
+filter:
+- query:
+    query_string:
+      query: (process_parent_path.keyword:(*\\w3wp.exe *\\httpd.exe *\\nginx.exe *\\php\-cgi.exe)
+        AND process_path.keyword:(*\\cmd.exe *\\sh.exe *\\bash.exe *\\powershell.exe))
+index: logs-*
+name: Shells-Spawned-by-Web-Servers_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

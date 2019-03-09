@@ -1,0 +1,16 @@
+alert:
+- debug
+description: Detects programs running in suspicious files system locations
+filter:
+- query:
+    query_string:
+      query: process_path.keyword:(*\\$Recycle.bin *\\Users\\Public\\* C\:\\Perflogs\\*
+        *\\Windows\\Fonts\\* *\\Windows\\IME\\* *\\Windows\\addins\\* *\\Windows\\debug\\*)
+index: logs-*
+name: Suspicious-Program-Location-Process-Starts_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

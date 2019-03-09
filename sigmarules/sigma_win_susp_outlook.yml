@@ -1,0 +1,16 @@
+alert:
+- debug
+description: Detects EnableUnsafeClientMailRules used for Script Execution from Outlook
+filter:
+- query:
+    query_string:
+      query: (process_command_line.keyword:*EnableUnsafeClientMailRules* OR (process_parent_path.keyword:*\\outlook.exe
+        AND process_command_line:"\\\\*\\*.exe"))
+index: logs-*
+name: Suspicious-Execution-from-Outlook_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

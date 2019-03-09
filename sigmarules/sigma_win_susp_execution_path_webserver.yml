@@ -1,0 +1,17 @@
+alert:
+- debug
+description: Detects a suspicious program execution in a web service root folder (filter
+  out false positives)
+filter:
+- query:
+    query_string:
+      query: (process_path.keyword:(*\\wwwroot\\* *\\wmpub\\* *\\htdocs\\*) AND NOT
+        (process_path.keyword:(*bin\\* *\\Tools\\* *\\SMSComponent\\*) AND process_parent_path.keyword:(*\\services.exe)))
+index: logs-*
+name: Execution-in-Webserver-Root-Folder_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

@@ -1,0 +1,16 @@
+alert:
+- debug
+description: RDP login with localhost source address may be a tunnelled login
+filter:
+- query:
+    query_string:
+      query: (event_id:"4624" AND logon_type:"10" AND SourceNetworkAddress:("\:\:1"
+        "127.0.0.1"))
+index: logs-endpoint-winevent-security-*
+name: RDP-Login-from-localhost_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

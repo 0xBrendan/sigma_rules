@@ -1,0 +1,15 @@
+alert:
+- debug
+description: Detects a tscon.exe start as LOCAL SYSTEM
+filter:
+- query:
+    query_string:
+      query: (user_account:"NT\ AUTHORITY\\SYSTEM" AND process_path.keyword:*\\tscon.exe)
+index: logs-*
+name: Suspicious-TSCON-Start_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

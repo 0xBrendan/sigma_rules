@@ -1,0 +1,15 @@
+alert:
+- debug
+description: Detects a ping command that uses a hex encoded IP address
+filter:
+- query:
+    query_string:
+      query: process_command_line.keyword:(*\\ping.exe\ 0x* *\\ping\ 0x*)
+index: logs-*
+name: Ping-Hex-IP_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

@@ -1,0 +1,16 @@
+alert:
+- debug
+description: Detects an executable in the Windows folder accessing suspicious domains
+filter:
+- query:
+    query_string:
+      query: (event_id:"3" AND dst_host_name.keyword:(*dl.dropboxusercontent.com *.pastebin.com)
+        AND process_path:"C\:\\Windows\\*")
+index: logs-endpoint-winevent-sysmon-*
+name: Microsoft-Binary-Suspicious-Communication-Endpoint_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

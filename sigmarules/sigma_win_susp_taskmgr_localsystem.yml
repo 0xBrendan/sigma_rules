@@ -1,0 +1,15 @@
+alert:
+- debug
+description: Detects the creation of taskmgr.exe process in context of LOCAL_SYSTEM
+filter:
+- query:
+    query_string:
+      query: (user_account:"NT\ AUTHORITY\\SYSTEM" AND process_path.keyword:*\\taskmgr.exe)
+index: logs-*
+name: Taskmgr-as-LOCAL_SYSTEM_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

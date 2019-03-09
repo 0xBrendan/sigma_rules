@@ -1,0 +1,18 @@
+alert:
+- debug
+description: Detects the installation of a Callout DLL via CalloutDlls and CalloutEnabled
+  parameter in Registry, which can be used to execute code in context of the DHCP
+  server (restart required)
+filter:
+- query:
+    query_string:
+      query: (event_id:"13" AND registry_key_path.keyword:(*\\Services\\DHCPServer\\Parameters\\CalloutDlls
+        *\\Services\\DHCPServer\\Parameters\\CalloutEnabled))
+index: logs-endpoint-winevent-sysmon-*
+name: DHCP-Callout-DLL-installation_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

@@ -1,0 +1,16 @@
+alert:
+- debug
+description: Detects suspicious process run from unusual locations
+filter:
+- query:
+    query_string:
+      query: process_command_line.keyword:(*\:\\RECYCLER\\* *\:\\SystemVolumeInformation\\*
+        %windir%\\Tasks\\* %systemroot%\\debug\\*)
+index: logs-*
+name: Suspicious-Process-Start-Locations_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

@@ -1,0 +1,16 @@
+alert:
+- debug
+description: Detects interactive console logons to
+filter:
+- query:
+    query_string:
+      query: ((event_id:("528" "529" "4624" "4625") AND logon_type:"2" AND host_name:("%ServerSystems%"
+        "%DomainControllers%")) AND NOT (logon_process_name:"Advapi" AND host_name:"%Workstations%"))
+index: logs-endpoint-winevent-security-*
+name: Interactive-Logon-to-Server-Systems_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

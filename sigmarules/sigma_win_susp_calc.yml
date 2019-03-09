@@ -1,0 +1,17 @@
+alert:
+- debug
+description: Detects suspicious use of calc.exe with command line parameters or in
+  a suspicious directory, which is likely caused by some PoC or detection evasion
+filter:
+- query:
+    query_string:
+      query: (process_command_line.keyword:*\\calc.exe\ * OR (process_path.keyword:*\\calc.exe
+        AND NOT (process_path.keyword:*\\Windows\\Sys*)))
+index: logs-*
+name: Suspicious-Calculator-Usage_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

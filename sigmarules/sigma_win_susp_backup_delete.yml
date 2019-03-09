@@ -1,0 +1,15 @@
+alert:
+- debug
+description: Detects backup catalog deletions
+filter:
+- query:
+    query_string:
+      query: (event_id:"524" AND source_name:"Backup")
+index: logs-endpoint-winevent-application-*
+name: Backup-Catalog-Deleted_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

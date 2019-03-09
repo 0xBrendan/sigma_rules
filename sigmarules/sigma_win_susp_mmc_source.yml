@@ -1,0 +1,17 @@
+alert:
+- debug
+description: Processes started by MMC could be a sign of lateral movement using MMC
+  application COM object
+filter:
+- query:
+    query_string:
+      query: ((process_parent_path.keyword:*\\mmc.exe AND process_path.keyword:*\\cmd.exe)
+        AND NOT (process_command_line.keyword:*\\RunCmd.cmd))
+index: logs-*
+name: Processes-created-by-MMC_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

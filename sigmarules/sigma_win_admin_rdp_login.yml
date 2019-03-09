@@ -1,0 +1,16 @@
+alert:
+- debug
+description: Detect remote login by Administrator user depending on internal pattern
+filter:
+- query:
+    query_string:
+      query: (event_id:"4624" AND logon_type:"10" AND logon_authentication_package:"Negotiate"
+        AND user_name.keyword:Admin\-*)
+index: logs-endpoint-winevent-security-*
+name: Admin-User-Remote-Logon_0
+priority: 4
+realert:
+  minutes: 0
+type: any
+
+

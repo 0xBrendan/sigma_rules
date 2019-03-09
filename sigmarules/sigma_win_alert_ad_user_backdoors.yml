@@ -1,0 +1,19 @@
+alert:
+- debug
+description: Detects scenarios where one can control another users or computers account
+  without having to use their credentials.
+filter:
+- query:
+    query_string:
+      query: ((((event_id:"4738" AND NOT (NOT _exists_:user_attribute_allowed_todelegate))
+        OR (event_id:"5136" AND dsobject_attribute_name:"msDS\-AllowedToDelegateTo"))
+        OR (event_id:"5136" AND dsobject_class:"user" AND dsobject_attribute_name:"servicePrincipalName"))
+        OR (event_id:"5136" AND dsobject_attribute_name:"msDS\-AllowedToActOnBehalfOfOtherIdentity"))
+index: logs-endpoint-winevent-security-*
+name: Active-Directory-User-Backdoors_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

@@ -1,0 +1,18 @@
+alert:
+- debug
+description: Detects programs with network connections running in suspicious files
+  system locations
+filter:
+- query:
+    query_string:
+      query: (event_id:"3" AND process_path.keyword:(*\\$Recycle.bin *\\Users\\All\
+        Users\\* *\\Users\\Default\\* *\\Users\\Public\\* C\:\\Perflogs\\* *\\config\\systemprofile\\*
+        *\\Windows\\Fonts\\* *\\Windows\\IME\\* *\\Windows\\addins\\*))
+index: logs-endpoint-winevent-sysmon-*
+name: Suspicious-Program-Location-with-Network-Connections_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

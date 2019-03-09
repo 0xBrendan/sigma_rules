@@ -1,0 +1,17 @@
+alert:
+- debug
+description: Detects copying and renaming of powershell.exe before execution (RETEFE
+  malware DOC/macro starting Sept 2018)
+filter:
+- query:
+    query_string:
+      query: (file_description:"Windows\ PowerShell" AND NOT ((process_path.keyword:(*\\powershell.exe
+        *\\powershell_ise.exe) OR file_description:"Windows\ PowerShell\ ISE")))
+index: logs-*
+name: Renamed-Powershell.exe_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

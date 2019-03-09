@@ -1,0 +1,19 @@
+alert:
+- debug
+description: Detects suspicious uses of the SysInternals Procdump utility by using
+  a special command line parameter in combination with the lsass.exe process. This
+  way we're also able to catch cases in which the attacker has renamed the procdump
+  executable.
+filter:
+- query:
+    query_string:
+      query: (process_command_line.keyword:(*\ \-ma\ *) AND process_command_line.keyword:(*\
+        lsass.exe*))
+index: logs-*
+name: Suspicious-Use-of-Procdump_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

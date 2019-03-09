@@ -1,0 +1,15 @@
+alert:
+- debug
+description: Detects MSHTA.EXE spwaned by SVCHOST described in report
+filter:
+- query:
+    query_string:
+      query: (process_parent_path.keyword:*\\svchost.exe AND process_path.keyword:*\\mshta.exe)
+index: logs-*
+name: MSHTA-spwaned-by-SVCHOST-as-seen-in-LethalHTA_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

@@ -1,0 +1,16 @@
+alert:
+- debug
+description: Detects execution of the Notepad++ updater in a suspicious directory,
+  which is often used in DLL side-loading attacks
+filter:
+- query:
+    query_string:
+      query: (process_path.keyword:*\\GUP.exe AND NOT (process_path.keyword:*\\updater\*))
+index: logs-*
+name: Suspicious-GUP-Usage_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

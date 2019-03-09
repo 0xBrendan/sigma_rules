@@ -1,0 +1,19 @@
+alert:
+- debug
+description: Detects known malicious service installs that only appear in cases of
+  lateral movement, credential dumping and other suspicious activity
+filter:
+- query:
+    query_string:
+      query: (event_id:"7045" AND (service_name:("WCESERVICE" "WCE\ SERVICE") OR service_image_path.keyword:*\\PAExec*
+        OR service_image_path.keyword:winexesvc.exe* OR service_image_path.keyword:*\\DumpSvc.exe
+        OR service_name:"mssecsvc2.0" OR service_image_path.keyword:*\ net\ user\
+        * OR service_name.keyword:(pwdump* gsecdump* cachedump*)))
+index: logs-endpoint-winevent-system-*
+name: Malicious-Service-Installations_0
+priority: 1
+realert:
+  minutes: 0
+type: any
+
+

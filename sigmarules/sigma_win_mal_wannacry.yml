@@ -1,0 +1,19 @@
+alert:
+- debug
+description: Detects WannaCry Ransomware Activity
+filter:
+- query:
+    query_string:
+      query: (process_command_line.keyword:(*vssadmin\ delete\ shadows* *icacls\ *\
+        \/grant\ Everyone\:F\ \/T\ \/C\ \/Q* *bcdedit\ \/set\ \{default\}\ recoveryenabled\
+        no* *wbadmin\ delete\ catalog\ \-quiet*) OR process_path.keyword:(*\\tasksche.exe
+        *\\mssecsvc.exe *\\taskdl.exe *\\WanaDecryptor* *\\taskhsvc.exe *\\taskse.exe
+        *\\111.exe *\\lhdfrgui.exe *\\diskpart.exe *\\linuxnew.exe *\\wannacry.exe))
+index: logs-*
+name: WannaCry-Ransomware_0
+priority: 1
+realert:
+  minutes: 0
+type: any
+
+

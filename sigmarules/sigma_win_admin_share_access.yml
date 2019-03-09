@@ -1,0 +1,15 @@
+alert:
+- debug
+description: Detects access to $ADMIN share
+filter:
+- query:
+    query_string:
+      query: ((event_id:"5140" AND share_name:"Admin$") AND NOT (user_name.keyword:*$))
+index: logs-endpoint-winevent-security-*
+name: Access-to-ADMIN$-Share_0
+priority: 4
+realert:
+  minutes: 0
+type: any
+
+

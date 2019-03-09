@@ -1,0 +1,15 @@
+alert:
+- debug
+description: Detects a driver load from a temporary directory
+filter:
+- query:
+    query_string:
+      query: (event_id:"6" AND driver_loaded.keyword:*\\Temp\\*)
+index: logs-endpoint-winevent-sysmon-*
+name: Suspicious-Driver-Load-from-Temp_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

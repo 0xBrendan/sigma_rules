@@ -1,0 +1,15 @@
+alert:
+- debug
+description: Detects a dump file written by QuarksPwDump password dumper
+filter:
+- query:
+    query_string:
+      query: (event_id:"11" AND file_name.keyword:*\\AppData\\Local\\Temp\\SAM\-*.dmp*)
+index: logs-endpoint-winevent-sysmon-*
+name: QuarksPwDump-Dump-File_0
+priority: 1
+realert:
+  minutes: 0
+type: any
+
+

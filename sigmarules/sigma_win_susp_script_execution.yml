@@ -1,0 +1,16 @@
+alert:
+- debug
+description: Detects suspicious file execution by wscript and cscript
+filter:
+- query:
+    query_string:
+      query: (process_path.keyword:(*\\wscript.exe *\\cscript.exe) AND process_command_line.keyword:(*.jse
+        *.vbe *.js *.vba))
+index: logs-*
+name: WSF/JSE/JS/VBA/VBE-File-Execution_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

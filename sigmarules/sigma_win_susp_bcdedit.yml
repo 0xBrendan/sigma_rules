@@ -1,0 +1,16 @@
+alert:
+- debug
+description: Detects, possibly, malicious unauthorized usage of bcdedit.exe
+filter:
+- query:
+    query_string:
+      query: (process_path.keyword:*\\fsutil.exe AND ProcessCommandLine.keyword:(*delete*
+        *deletevalue* *import*))
+index: logs-*
+name: Possible-Ransomware-or-unauthorized-MBR-modifications_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

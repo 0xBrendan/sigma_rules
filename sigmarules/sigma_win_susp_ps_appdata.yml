@@ -1,0 +1,17 @@
+alert:
+- debug
+description: Detects a suspicious command line execution that invokes PowerShell with
+  reference to an AppData folder
+filter:
+- query:
+    query_string:
+      query: process_command_line.keyword:(*\ \/c\ powershell*\\AppData\\Local\\*
+        *\ \/c\ powershell*\\AppData\\Roaming\\*)
+index: logs-*
+name: PowerShell-Script-Run-in-AppData_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

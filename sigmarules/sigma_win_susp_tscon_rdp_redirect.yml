@@ -1,0 +1,15 @@
+alert:
+- debug
+description: Detects a suspicious RDP session redirect using tscon.exe
+filter:
+- query:
+    query_string:
+      query: process_command_line.keyword:*\ \/dest\:rdp\-tcp\:*
+index: logs-*
+name: Suspicious-RDP-Redirect-Using-TSCON_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

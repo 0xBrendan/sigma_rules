@@ -1,0 +1,17 @@
+alert:
+- debug
+description: Detects a suspicious parent of csc.exe, which could by a sign of payload
+  delivery
+filter:
+- query:
+    query_string:
+      query: (process_path.keyword:*\\csc.exe* AND process_parent_path.keyword:(*\\wscript.exe
+        *\\cscript.exe *\\mshta.exe))
+index: logs-*
+name: Suspicious-Parent-of-Csc.exe_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

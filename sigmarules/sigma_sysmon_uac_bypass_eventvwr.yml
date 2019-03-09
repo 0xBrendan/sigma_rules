@@ -1,0 +1,17 @@
+alert:
+- debug
+description: Detects UAC bypass method using Windows event viewer
+filter:
+- query:
+    query_string:
+      query: ((event_id:"13" AND registry_key_path:"HKEY_USERS\\*\\mscfile\\shell\\open\\command")
+        OR ((event_id:"1" AND process_parent_path.keyword:*\\eventvwr.exe) AND NOT
+        (process_path.keyword:*\\mmc.exe)))
+index: logs-endpoint-winevent-sysmon-*
+name: UAC-Bypass-via-Event-Viewer_0
+priority: 1
+realert:
+  minutes: 0
+type: any
+
+

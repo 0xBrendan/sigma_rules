@@ -1,0 +1,16 @@
+alert:
+- debug
+description: Detects a suspicious svchost process start
+filter:
+- query:
+    query_string:
+      query: (process_path.keyword:*\\svchost.exe AND NOT (process_parent_path.keyword:(*\\services.exe
+        *\\MsMpEng.exe)))
+index: logs-*
+name: Suspicious-Svchost-Process_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

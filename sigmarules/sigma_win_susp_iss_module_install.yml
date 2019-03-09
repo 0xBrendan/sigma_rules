@@ -1,0 +1,15 @@
+alert:
+- debug
+description: Detects suspicious IIS native-code module installations via command line
+filter:
+- query:
+    query_string:
+      query: process_command_line.keyword:(*\\APPCMD.EXE\ install\ module\ \/name\:*)
+index: logs-*
+name: IIS-Native-Code-Module-Command-Line-Installation_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

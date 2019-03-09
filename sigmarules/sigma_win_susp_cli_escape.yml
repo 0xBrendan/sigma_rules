@@ -1,0 +1,15 @@
+alert:
+- debug
+description: Detects suspicious process that use escape characters
+filter:
+- query:
+    query_string:
+      query: process_command_line:("TAB" "\^h\^t\^t\^p" "h\"t\"t\"p")
+index: logs-*
+name: Suspicious-Commandline-Escape_0
+priority: 4
+realert:
+  minutes: 0
+type: any
+
+

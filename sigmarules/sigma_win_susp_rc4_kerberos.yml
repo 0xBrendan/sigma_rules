@@ -1,0 +1,16 @@
+alert:
+- debug
+description: Detects service ticket requests using RC4 encryption type
+filter:
+- query:
+    query_string:
+      query: ((event_id:"4769" AND ticket_options:"0x40810000" AND ticket_encryption_type:"0x17")
+        AND NOT (service_name.keyword:$*))
+index: logs-endpoint-winevent-security-*
+name: Suspicious-Kerberos-RC4-Ticket-Encryption_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

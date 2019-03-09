@@ -1,0 +1,17 @@
+alert:
+- debug
+description: Detects suspicious a certutil command that used to encode files, which
+  is sometimes used for data exfiltration
+filter:
+- query:
+    query_string:
+      query: process_command_line.keyword:(certutil\ \-f\ \-encode\ * certutil.exe\
+        \-f\ \-encode\ * certutil\ \-encode\ \-f\ * certutil.exe\ \-encode\ \-f\ *)
+index: logs-*
+name: Certutil-Encode_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+

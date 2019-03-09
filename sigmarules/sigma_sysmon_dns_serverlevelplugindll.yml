@@ -1,0 +1,18 @@
+alert:
+- debug
+description: Detects the installation of a plugin DLL via ServerLevelPluginDll parameter
+  in Registry, which can be used to execute code in context of the DNS server (restart
+  required)
+filter:
+- query:
+    query_string:
+      query: ((event_id:"1" AND process_command_line.keyword:dnscmd.exe\ \/config\
+        \/serverlevelplugindll\ *) OR (event_id:"13" AND registry_key_path.keyword:*\\services\\DNS\\Parameters\\ServerLevelPluginDll))
+index: logs-endpoint-winevent-sysmon-*
+name: DNS-ServerLevelPluginDll-Install_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+

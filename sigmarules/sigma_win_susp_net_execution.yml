@@ -1,0 +1,16 @@
+alert:
+- debug
+description: Detects execution of Net.exe, whether suspicious or benign.
+filter:
+- query:
+    query_string:
+      query: (process_path.keyword:(*\\net.exe *\\net1.exe) AND process_command_line.keyword:(*\
+        group* *\ localgroup* *\ user* *\ view* *\ share *\ accounts* *\ use*))
+index: logs-*
+name: Net.exe-Execution_0
+priority: 4
+realert:
+  minutes: 0
+type: any
+
+
