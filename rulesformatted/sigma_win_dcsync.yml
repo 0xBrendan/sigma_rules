@@ -1,0 +1,45 @@
+import: globalconfig.txt
+ 
+alert:
+- slack
+- hivealerter
+ 
+description: Detects Mimikatz DC sync security events
+filter:
+- query:
+    query_string:
+      query: (event_id:"4662" AND object_properties.keyword:(*Replicating\ Directory\
+        Changes\ All* *1131f6ad\-9c07\-11d1\-f79f\-00c04fc2dcd2*))
+index: logs-endpoint-winevent-security-*
+name: Mimikatz-DC-Sync_0
+priority: 1
+realert:
+  minutes: 0
+type: any
+
+
+
+alert_text:
+	EventId: {0}\n
+        Timestamp: {1}\n
+        Index: {2}\n
+
+alert_text_args: ["event_id", "@timestamp","_id"]
+alert_text_type: alert_text_only
+
+hive_alert_config:
+	title: "{rule[name]}
+	type: "external"
+	source: "Elastalert"
+	description: "Detects Mimikatz DC sync security events"
+	severity: "1"
+	tags: ["Security Alert", "Suspicious", "{match[event_id]}
+	tlp: 1
+	status: "New"
+	follow: True
+
+hive_observable_data_mapping:
+  - index: "{match[_index]}"
+  - timestamp: "{match[@timestamp]}"
+  - event id: "{match[event_id]}"
+

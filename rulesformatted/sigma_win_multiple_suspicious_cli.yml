@@ -1,0 +1,57 @@
+import: globalconfig.txt
+ 
+alert:
+- slack
+- hivealerter
+ 
+buffer_time:
+  minutes: 5
+description: Detects multiple suspicious process in a limited timeframe
+doc_type: doc
+filter:
+- query:
+    query_string:
+      query: process_command_line:("arp.exe" "at.exe" "attrib.exe" "cscript.exe" "dsquery.exe"
+        "hostname.exe" "ipconfig.exe" "mimikatz.exe" "nbstat.exe" "net.exe" "netsh.exe"
+        "nslookup.exe" "ping.exe" "quser.exe" "qwinsta.exe" "reg.exe" "runas.exe"
+        "sc.exe" "schtasks.exe" "ssh.exe" "systeminfo.exe" "taskkill.exe" "telnet.exe"
+        "tracert.exe" "wscript.exe" "xcopy.exe" "pscp.exe" "copy.exe" "robocopy.exe"
+        "certutil.exe" "vssadmin.exe" "powershell.exe" "wevtutil.exe" "psexec.exe"
+        "bcedit.exe" "wbadmin.exe" "icacls.exe" "diskpart.exe")
+index: logs-*
+max_threshold: 5
+metric_agg_key: _id
+metric_agg_type: cardinality
+name: Quick-Execution-of-a-Series-of-Suspicious-Commands_0
+priority: 4
+query_key: host_name.keyword
+realert:
+  minutes: 0
+type: metric_aggregation
+
+
+
+alert_text:
+	EventId: {0}\n
+        Timestamp: {1}\n
+        Index: {2}\n
+
+alert_text_args: ["event_id", "@timestamp","_id"]
+alert_text_type: alert_text_only
+
+hive_alert_config:
+	title: "{rule[name]}
+	type: "external"
+	source: "Elastalert"
+	description: "Detects multiple suspicious process in a limited timeframe"
+	severity: "4"
+	tags: ["Security Alert", "Suspicious", "{match[event_id]}
+	tlp: 1
+	status: "New"
+	follow: True
+
+hive_observable_data_mapping:
+  - index: "{match[_index]}"
+  - timestamp: "{match[@timestamp]}"
+  - event id: "{match[event_id]}"
+

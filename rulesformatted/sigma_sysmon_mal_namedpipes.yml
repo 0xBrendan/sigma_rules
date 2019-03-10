@@ -1,0 +1,47 @@
+import: globalconfig.txt
+ 
+alert:
+- slack
+- hivealerter
+ 
+description: Detects the creation of a named pipe used by known APT malware
+filter:
+- query:
+    query_string:
+      query: (event_id:("17" "18") AND pipe_name.keyword:(\\isapi_http \\isapi_dg
+        \\isapi_dg2 \\sdlrpc \\ahexec \\winsession \\lsassw \\46a676ab7f179e511e30dd2dc41bd388
+        \\9f81f59bc58452127884ce513865ed20 \\e710f28d59aa529d6792ca6ff0ca1b34 \\rpchlp_3
+        \\NamePipe_MoreWindows \\pcheap_reuse \\msagent_*))
+index: logs-endpoint-winevent-sysmon-*
+name: Malicious-Named-Pipe_0
+priority: 1
+realert:
+  minutes: 0
+type: any
+
+
+
+alert_text:
+	EventId: {0}\n
+        Timestamp: {1}\n
+        Index: {2}\n
+
+alert_text_args: ["event_id", "@timestamp","_id"]
+alert_text_type: alert_text_only
+
+hive_alert_config:
+	title: "{rule[name]}
+	type: "external"
+	source: "Elastalert"
+	description: "Detects the creation of a named pipe used by known APT malware"
+	severity: "1"
+	tags: ["Security Alert", "Suspicious", "{match[event_id]}
+	tlp: 1
+	status: "New"
+	follow: True
+
+hive_observable_data_mapping:
+  - index: "{match[_index]}"
+  - timestamp: "{match[@timestamp]}"
+  - event id: "{match[event_id]}"
+

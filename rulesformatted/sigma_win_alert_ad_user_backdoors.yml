@@ -1,0 +1,48 @@
+import: globalconfig.txt
+ 
+alert:
+- slack
+- hivealerter
+ 
+description: Detects scenarios where one can control another users or computers account
+  without having to use their credentials.
+filter:
+- query:
+    query_string:
+      query: ((((event_id:"4738" AND NOT (NOT _exists_:user_attribute_allowed_todelegate))
+        OR (event_id:"5136" AND dsobject_attribute_name:"msDS\-AllowedToDelegateTo"))
+        OR (event_id:"5136" AND dsobject_class:"user" AND dsobject_attribute_name:"servicePrincipalName"))
+        OR (event_id:"5136" AND dsobject_attribute_name:"msDS\-AllowedToActOnBehalfOfOtherIdentity"))
+index: logs-endpoint-winevent-security-*
+name: Active-Directory-User-Backdoors_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+
+
+alert_text:
+	EventId: {0}\n
+        Timestamp: {1}\n
+        Index: {2}\n
+
+alert_text_args: ["event_id", "@timestamp","_id"]
+alert_text_type: alert_text_only
+
+hive_alert_config:
+	title: "{rule[name]}
+	type: "external"
+	source: "Elastalert"
+	description: "Detects scenarios where one can control another users or computers account"
+	severity: "2"
+	tags: ["Security Alert", "Suspicious", "{match[event_id]}
+	tlp: 1
+	status: "New"
+	follow: True
+
+hive_observable_data_mapping:
+  - index: "{match[_index]}"
+  - timestamp: "{match[@timestamp]}"
+  - event id: "{match[event_id]}"
+

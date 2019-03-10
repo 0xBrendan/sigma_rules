@@ -1,0 +1,46 @@
+import: globalconfig.txt
+ 
+alert:
+- slack
+- hivealerter
+ 
+description: Detects process access to LSASS which is typical for Mimikatz (0x1000
+  PROCESS_QUERY_ LIMITED_INFORMATION, 0x0400 PROCESS_QUERY_ INFORMATION, 0x0010 PROCESS_VM_READ)
+filter:
+- query:
+    query_string:
+      query: (event_id:"10" AND target_process_path:"C\:\\windows\\system32\\lsass.exe"
+        AND process_granted_access:"0x1410")
+index: logs-endpoint-winevent-sysmon-*
+name: Mimikatz-Detection-LSASS-Access_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+
+
+alert_text:
+	EventId: {0}\n
+        Timestamp: {1}\n
+        Index: {2}\n
+
+alert_text_args: ["event_id", "@timestamp","_id"]
+alert_text_type: alert_text_only
+
+hive_alert_config:
+	title: "{rule[name]}
+	type: "external"
+	source: "Elastalert"
+	description: "Detects process access to LSASS which is typical for Mimikatz (0x1000"
+	severity: "2"
+	tags: ["Security Alert", "Suspicious", "{match[event_id]}
+	tlp: 1
+	status: "New"
+	follow: True
+
+hive_observable_data_mapping:
+  - index: "{match[_index]}"
+  - timestamp: "{match[@timestamp]}"
+  - event id: "{match[event_id]}"
+

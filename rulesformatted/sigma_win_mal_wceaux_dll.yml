@@ -1,0 +1,45 @@
+import: globalconfig.txt
+ 
+alert:
+- slack
+- hivealerter
+ 
+description: Detects wceaux.dll access while WCE pass-the-hash remote command execution
+  on source host
+filter:
+- query:
+    query_string:
+      query: (event_id:("4656" "4658" "4660" "4663") AND object_name.keyword:*\\wceaux.dll)
+index: logs-endpoint-winevent-security-*
+name: WCE-wceaux.dll-Access_0
+priority: 1
+realert:
+  minutes: 0
+type: any
+
+
+
+alert_text:
+	EventId: {0}\n
+        Timestamp: {1}\n
+        Index: {2}\n
+
+alert_text_args: ["event_id", "@timestamp","_id"]
+alert_text_type: alert_text_only
+
+hive_alert_config:
+	title: "{rule[name]}
+	type: "external"
+	source: "Elastalert"
+	description: "Detects wceaux.dll access while WCE pass-the-hash remote command execution"
+	severity: "1"
+	tags: ["Security Alert", "Suspicious", "{match[event_id]}
+	tlp: 1
+	status: "New"
+	follow: True
+
+hive_observable_data_mapping:
+  - index: "{match[_index]}"
+  - timestamp: "{match[@timestamp]}"
+  - event id: "{match[event_id]}"
+

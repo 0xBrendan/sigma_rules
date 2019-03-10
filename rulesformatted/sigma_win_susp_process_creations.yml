@@ -1,0 +1,59 @@
+import: globalconfig.txt
+ 
+alert:
+- slack
+- hivealerter
+ 
+description: Detects suspicious process starts on Windows systems based on keywords
+filter:
+- query:
+    query_string:
+      query: process_command_line.keyword:(vssadmin.exe\ delete\ shadows* vssadmin\
+        delete\ shadows* vssadmin\ create\ shadow\ \/for\=C\:* copy\ \\?\\GLOBALROOT\\Device\\*\\windows\\ntds\\ntds.dit*
+        copy\ \\?\\GLOBALROOT\\Device\\*\\config\\SAM* reg\ SAVE\ HKLM\\SYSTEM\ *
+        reg\ SAVE\ HKLM\\SAM\ * *\ sekurlsa\:* net\ localgroup\ adminstrators\ *\
+        \/add net\ group\ \"Domain\ Admins\"\ *\ \/ADD\ \/DOMAIN certutil.exe\ *\-urlcache*\
+        http* certutil.exe\ *\-urlcache*\ ftp* netsh\ advfirewall\ firewall\ *\\AppData\\*
+        attrib\ \+S\ \+H\ \+R\ *\\AppData\\* schtasks*\ \/create\ *\\AppData\\* schtasks*\
+        \/sc\ minute* *\\Regasm.exe\ *\\AppData\\* *\\Regasm\ *\\AppData\\* *\\bitsadmin*\
+        \/transfer* *\\certutil.exe\ *\ \-decode\ * *\\certutil.exe\ *\ \-decodehex\
+        * *\\certutil.exe\ \-ping\ * icacls\ *\ \/grant\ Everyone\:F\ \/T\ \/C\ \/Q
+        *\ wmic\ shadowcopy\ delete\ * *\ wbadmin.exe\ delete\ catalog\ \-quiet* *\\wscript.exe\
+        *.jse *\\wscript.exe\ *.js *\\wscript.exe\ *.vba *\\wscript.exe\ *.vbe *\\cscript.exe\
+        *.jse *\\cscript.exe\ *.js *\\cscript.exe\ *.vba *\\cscript.exe\ *.vbe *\\fodhelper.exe
+        *waitfor*\/s* *waitfor*\/si\ persist* *remote*\/s* *remote*\/c* *remote*\/q*
+        *AddInProcess* *\ \/stext\ * *\ \/scomma\ * *\ \/stab\ * *\ \/stabular\ *
+        *\ \/shtml\ * *\ \/sverhtml\ * *\ \/sxml\ *)
+index: logs-*
+name: Suspicious-Process-Creation_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+
+
+alert_text:
+	EventId: {0}\n
+        Timestamp: {1}\n
+        Index: {2}\n
+
+alert_text_args: ["event_id", "@timestamp","_id"]
+alert_text_type: alert_text_only
+
+hive_alert_config:
+	title: "{rule[name]}
+	type: "external"
+	source: "Elastalert"
+	description: "Detects suspicious process starts on Windows systems based on keywords"
+	severity: "3"
+	tags: ["Security Alert", "Suspicious", "{match[event_id]}
+	tlp: 1
+	status: "New"
+	follow: True
+
+hive_observable_data_mapping:
+  - index: "{match[_index]}"
+  - timestamp: "{match[@timestamp]}"
+  - event id: "{match[event_id]}"
+

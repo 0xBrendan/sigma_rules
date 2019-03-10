@@ -1,0 +1,46 @@
+import: globalconfig.txt
+ 
+alert:
+- slack
+- hivealerter
+ 
+description: Detects a JAVA process running with remote debugging allowing more than
+  just localhost to connect
+filter:
+- query:
+    query_string:
+      query: (process_command_line.keyword:*transport\=dt_socket,address\=* AND NOT
+        (process_command_line.keyword:*address\=127.0.0.1* OR process_command_line.keyword:*address\=localhost*))
+index: logs-*
+name: Java-Running-with-Remote-Debugging_0
+priority: 3
+realert:
+  minutes: 0
+type: any
+
+
+
+alert_text:
+	EventId: {0}\n
+        Timestamp: {1}\n
+        Index: {2}\n
+
+alert_text_args: ["event_id", "@timestamp","_id"]
+alert_text_type: alert_text_only
+
+hive_alert_config:
+	title: "{rule[name]}
+	type: "external"
+	source: "Elastalert"
+	description: "Detects a JAVA process running with remote debugging allowing more than"
+	severity: "3"
+	tags: ["Security Alert", "Suspicious", "{match[event_id]}
+	tlp: 1
+	status: "New"
+	follow: True
+
+hive_observable_data_mapping:
+  - index: "{match[_index]}"
+  - timestamp: "{match[@timestamp]}"
+  - event id: "{match[event_id]}"
+

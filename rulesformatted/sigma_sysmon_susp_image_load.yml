@@ -1,0 +1,46 @@
+import: globalconfig.txt
+ 
+alert:
+- slack
+- hivealerter
+ 
+description: Detects Loading of samlib.dll, WinSCard.dll from untypical process e.g.
+  through process hollowing by Mimikatz
+filter:
+- query:
+    query_string:
+      query: (event_id:"7" AND process_path.keyword:(*\\notepad.exe) AND module_loaded.keyword:(*\\samlib.dll
+        *\\WinSCard.dll))
+index: logs-endpoint-winevent-sysmon-*
+name: Possible-Process-Hollowing-Image-Loading_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+
+
+alert_text:
+	EventId: {0}\n
+        Timestamp: {1}\n
+        Index: {2}\n
+
+alert_text_args: ["event_id", "@timestamp","_id"]
+alert_text_type: alert_text_only
+
+hive_alert_config:
+	title: "{rule[name]}
+	type: "external"
+	source: "Elastalert"
+	description: "Detects Loading of samlib.dll, WinSCard.dll from untypical process e.g."
+	severity: "2"
+	tags: ["Security Alert", "Suspicious", "{match[event_id]}
+	tlp: 1
+	status: "New"
+	follow: True
+
+hive_observable_data_mapping:
+  - index: "{match[_index]}"
+  - timestamp: "{match[@timestamp]}"
+  - event id: "{match[event_id]}"
+

@@ -1,0 +1,48 @@
+import: globalconfig.txt
+ 
+alert:
+- slack
+- hivealerter
+ 
+description: This method triggers on rare Kerberos Failure Codes caused by manipulations
+  of Kerberos messages
+filter:
+- query:
+    query_string:
+      query: (event_id:("675" "4768" "4769" "4771") AND ticket_failure_code:("0x9"
+        "0xA" "0xB" "0xF" "0x10" "0x11" "0x13" "0x14" "0x1A" "0x1F" "0x21" "0x22"
+        "0x23" "0x24" "0x26" "0x27" "0x28" "0x29" "0x2C" "0x2D" "0x2E" "0x2F" "0x31"
+        "0x32" "0x3E" "0x3F" "0x40" "0x41" "0x43" "0x44"))
+index: logs-endpoint-winevent-security-*
+name: Kerberos-Manipulation_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+
+
+alert_text:
+	EventId: {0}\n
+        Timestamp: {1}\n
+        Index: {2}\n
+
+alert_text_args: ["event_id", "@timestamp","_id"]
+alert_text_type: alert_text_only
+
+hive_alert_config:
+	title: "{rule[name]}
+	type: "external"
+	source: "Elastalert"
+	description: "This method triggers on rare Kerberos Failure Codes caused by manipulations"
+	severity: "2"
+	tags: ["Security Alert", "Suspicious", "{match[event_id]}
+	tlp: 1
+	status: "New"
+	follow: True
+
+hive_observable_data_mapping:
+  - index: "{match[_index]}"
+  - timestamp: "{match[@timestamp]}"
+  - event id: "{match[event_id]}"
+

@@ -1,0 +1,48 @@
+import: globalconfig.txt
+ 
+alert:
+- slack
+- hivealerter
+ 
+description: Detects process starts of binaries from a suspicious folder
+filter:
+- query:
+    query_string:
+      query: process_path.keyword:(C\:\\PerfLogs\\* C\:\\$Recycle.bin\\* C\:\\Intel\\Logs\\*
+        C\:\\Users\\Default\\* C\:\\Users\\Public\\* C\:\\Users\\NetworkService\\*
+        C\:\\Windows\\Fonts\\* C\:\\Windows\\Debug\\* C\:\\Windows\\Media\\* C\:\\Windows\\Help\\*
+        C\:\\Windows\\addins\\* C\:\\Windows\\repair\\* C\:\\Windows\\security\\*
+        *\\RSA\\MachineKeys\\* C\:\\Windows\\system32\\config\\systemprofile\\*)
+index: logs-*
+name: Executables-Started-in-Suspicious-Folder_0
+priority: 2
+realert:
+  minutes: 0
+type: any
+
+
+
+alert_text:
+	EventId: {0}\n
+        Timestamp: {1}\n
+        Index: {2}\n
+
+alert_text_args: ["event_id", "@timestamp","_id"]
+alert_text_type: alert_text_only
+
+hive_alert_config:
+	title: "{rule[name]}
+	type: "external"
+	source: "Elastalert"
+	description: "Detects process starts of binaries from a suspicious folder"
+	severity: "2"
+	tags: ["Security Alert", "Suspicious", "{match[event_id]}
+	tlp: 1
+	status: "New"
+	follow: True
+
+hive_observable_data_mapping:
+  - index: "{match[_index]}"
+  - timestamp: "{match[@timestamp]}"
+  - event id: "{match[event_id]}"
+

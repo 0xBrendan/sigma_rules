@@ -1,0 +1,76 @@
+import: globalconfig.txt
+ 
+alert:
+- slack
+- hivealerter
+ 
+buffer_time:
+  hours: 24
+description: Detects suspicious failed logins with different user accounts from a
+  single source system
+doc_type: doc
+filter:
+- query:
+    query_string:
+      query: (event_id:("529" "4625") AND user_name.keyword:* AND src_host_name.keyword:*)
+index: logs-endpoint-winevent-security-*
+max_threshold: 3
+metric_agg_key: user_name.keyword
+metric_agg_type: cardinality
+name: Multiple-Failed-Logins-with-Different-Accounts-from-Single-Source-System_0
+priority: 3
+query_key: src_host_name.keyword
+realert:
+  minutes: 0
+type: metric_aggregation
+
+alert:
+- slack
+- hivealerter
+ 
+buffer_time:
+  hours: 24
+description: Detects suspicious failed logins with different user accounts from a
+  single source system
+doc_type: doc
+filter:
+- query:
+    query_string:
+      query: (event_id:"4776" AND user_name.keyword:* AND src_host_name.keyword:*)
+index: logs-endpoint-winevent-security-*
+max_threshold: 3
+metric_agg_key: user_name.keyword
+metric_agg_type: cardinality
+name: Multiple-Failed-Logins-with-Different-Accounts-from-Single-Source-System_1
+priority: 3
+query_key: src_host_name.keyword
+realert:
+  minutes: 0
+type: metric_aggregation
+
+
+
+alert_text:
+	EventId: {0}\n
+        Timestamp: {1}\n
+        Index: {2}\n
+
+alert_text_args: ["event_id", "@timestamp","_id"]
+alert_text_type: alert_text_only
+
+hive_alert_config:
+	title: "{rule[name]}
+	type: "external"
+	source: "Elastalert"
+	description: "Detects suspicious failed logins with different user accounts from a Detects suspicious failed logins with different user accounts from a"
+	severity: "3 3"
+	tags: ["Security Alert", "Suspicious", "{match[event_id]}
+	tlp: 1
+	status: "New"
+	follow: True
+
+hive_observable_data_mapping:
+  - index: "{match[_index]}"
+  - timestamp: "{match[@timestamp]}"
+  - event id: "{match[event_id]}"
+
