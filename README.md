@@ -1,1 +1,0 @@
-# sigma_rules

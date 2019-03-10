@@ -1,0 +1,18 @@
+title: Relevant ClamAV Message
+description: Detects relevant ClamAV messages
+references:
+    - https://github.com/ossec/ossec-hids/blob/master/etc/rules/clam_av_rules.xml
+logsource:
+    product: linux
+    service: clamav
+detection:
+    keywords:
+        - 'Trojan*FOUND'
+        - 'VirTool*FOUND'
+        - 'Webshell*FOUND'
+        - 'Rootkit*FOUND'
+        - 'Htran*FOUND'
+    condition: keywords
+falsepositives:
+    - Unknown
+level: high

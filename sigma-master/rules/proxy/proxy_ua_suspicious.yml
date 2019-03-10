@@ -1,0 +1,35 @@
+title: Suspicious User Agent
+status: experimental
+description: Detects suspicious malformed user agent strings in proxy logs
+references:
+    - https://github.com/fastly/waf_testbed/blob/master/templates/default/scanners-user-agents.data.erb
+author: Florian Roth
+logsource:
+    category: proxy
+detection:
+    selection:
+      UserAgent:
+        # Badly scripted UA
+        - 'user-agent'  # User-Agent: User-Agent:
+        - '* (compatible;MSIE *'  # typical typo - missing space
+        - '*.0;Windows NT *'  # typical typo - missing space
+        - 'Mozilla/3.0 *'
+        - 'Mozilla/2.0 *'
+        - 'Mozilla/1.0 *'
+        - 'Mozilla *'  # missing slash
+        - ' Mozilla/*'  # leading space 
+        - 'Mozila/*'  # single 'l'
+        - '_'
+        - 'CertUtil URL Agent'  # https://twitter.com/stvemillertime/status/985150675527974912
+        - 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0)'  # CobaltStrike Beacon https://unit42.paloaltonetworks.com/tracking-oceanlotus-new-downloader-kerrdown/
+    falsepositives:
+        UserAgent:
+            - 'Mozilla/3.0 * Acrobat *'  # Acrobat with linked content
+    condition: selection and not falsepositives
+fields:
+    - ClientIP
+    - URL
+    - UserAgent
+falsepositives:
+    - Unknown
+level: high
