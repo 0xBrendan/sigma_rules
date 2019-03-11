@@ -29,8 +29,6 @@ realert:
   minutes: 0
 type: metric_aggregation
 
-
-
 alert_text:
 	EventId: {0}\n
         Timestamp: {1}\n

@@ -1,3 +1,4 @@
+
 mkdir rulesformatted
 cd sigmarules
 
@@ -7,17 +8,28 @@ done
 
 for entry in ../rulesformatted/*.yml ; do
 
-  sev=$(sed -n 's/priority: //p' $entry)
-  desc=$(sed -n 's/description: //p' $entry)
+  if [ "$(sed -n '/description/{n;p}' $entry)" != "filter:" ]
+  then
+	echo $entry
+#	echo "$(sed -n 's/description: //p' $entry)"
+#	echo "$(sed -n '/description: /{n;p}' $entry)"
+#	read -p "continue"
+  fi
 
-    sed -i '1s;^;import: globalconfig.txt\n;' $entry
-    sed -i '/globalconfig.txt/a\ ' $entry
-    sed -i 's/- debug/- slack/g' $entry
+  sev=$(sed -n 's/priority: //p' $entry) #pushing priority level to assign to hive severity
+  desc=$(sed -n 's/description: //p' $entry) #pushing description to variable to include within hive
+  size=$(stat -c '%s' $entry) #count filesize used by truncate
+
+    truncate -s $(expr $size - 2) $entry #trim whitespace from initial conversion
+
+    sed -i '1s;^;import: globalconfig.txt\n;' $entry #adding globalconfig reference at start of file
+    sed -i '/globalconfig.txt/a\ ' $entry #adding new line after globalconfig
+    sed -i 's/- debug/- slack/g' $entry # replace debug alert types with slack and hive +  next 2 lines
     sed -i '/- slack/a\- hivealerter' $entry
     sed -i '/- hivealerter/a\ ' $entry
 
-    echo '' >> $entry
-    echo 'alert_text:' >> $entry
+    echo '' >> $entry # these append new lines for formatting
+    echo 'alert_text:' >> $entry #following code appends the fields we need to the end of the file
 
     echo '	EventId: {0}\n' >> $entry
     echo '        Timestamp: {1}\n' >> $entry
@@ -39,11 +51,11 @@ for entry in ../rulesformatted/*.yml ; do
     echo '	follow: True' >> $entry
     echo '' >> $entry
 
-
     echo 'hive_observable_data_mapping:' >> $entry
     echo '  - index: "{match[_index]}"' >> $entry
     echo '  - timestamp: "{match[@timestamp]}"' >> $entry
     echo '  - event id: "{match[event_id]}"' >> $entry
     echo '' >> $entry
+
 done
 

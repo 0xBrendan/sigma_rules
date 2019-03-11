@@ -51,8 +51,6 @@ realert:
   minutes: 0
 type: any
 
-
-
 alert_text:
 	EventId: {0}\n
         Timestamp: {1}\n
