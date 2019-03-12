@@ -28,7 +28,7 @@ hive_alert_config:
 	title: "{rule[name]}
 	type: "external"
 	source: "Elastalert"
-	description: "Detects changes to HKCU:\Software\Classes\exefile\shell\runas\command\isolatedCommand"
+	description: "Detects changes to HKCU:\Software\Classes\exefile\shell\runas\command\isolatedCommand "
 	severity: "2"
 	tags: ["Security Alert", "Suspicious", "{match[event_id]}
 	tlp: 1

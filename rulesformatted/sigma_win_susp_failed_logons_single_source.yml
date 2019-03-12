@@ -4,11 +4,11 @@ alert:
 - slack
 - hivealerter
  
+doc_type: doc
 buffer_time:
   hours: 24
 description: Detects suspicious failed logins with different user accounts from a
   single source system
-doc_type: doc
 filter:
 - query:
     query_string:
@@ -28,11 +28,11 @@ alert:
 - slack
 - hivealerter
  
+doc_type: doc
 buffer_time:
   hours: 24
 description: Detects suspicious failed logins with different user accounts from a
   single source system
-doc_type: doc
 filter:
 - query:
     query_string:
@@ -60,8 +60,8 @@ hive_alert_config:
 	title: "{rule[name]}
 	type: "external"
 	source: "Elastalert"
-	description: "Detects suspicious failed logins with different user accounts from a Detects suspicious failed logins with different user accounts from a"
-	severity: "3 3"
+	description: "Detects suspicious failed logins with different user accounts from a single source system "
+	severity: "3"
 	tags: ["Security Alert", "Suspicious", "{match[event_id]}
 	tlp: 1
 	status: "New"

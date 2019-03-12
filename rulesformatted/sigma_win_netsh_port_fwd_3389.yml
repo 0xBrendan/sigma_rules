@@ -29,7 +29,7 @@ hive_alert_config:
 	title: "{rule[name]}
 	type: "external"
 	source: "Elastalert"
-	description: "Detects netsh commands that configure a port forwarding of port 3389"
+	description: "Detects netsh commands that configure a port forwarding of port 3389 used for RDP "
 	severity: "2"
 	tags: ["Security Alert", "Suspicious", "{match[event_id]}
 	tlp: 1

@@ -29,7 +29,7 @@ hive_alert_config:
 	title: "{rule[name]}
 	type: "external"
 	source: "Elastalert"
-	description: "Detects usage of cmdkey to look for cached credentials"
+	description: "Detects usage of cmdkey to look for cached credentials "
 	severity: "4"
 	tags: ["Security Alert", "Suspicious", "{match[event_id]}
 	tlp: 1

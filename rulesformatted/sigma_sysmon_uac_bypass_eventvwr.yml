@@ -30,7 +30,7 @@ hive_alert_config:
 	title: "{rule[name]}
 	type: "external"
 	source: "Elastalert"
-	description: "Detects UAC bypass method using Windows event viewer"
+	description: "Detects UAC bypass method using Windows event viewer "
 	severity: "1"
 	tags: ["Security Alert", "Suspicious", "{match[event_id]}
 	tlp: 1

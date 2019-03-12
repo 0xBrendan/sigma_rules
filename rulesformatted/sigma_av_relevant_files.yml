@@ -31,7 +31,7 @@ hive_alert_config:
 	title: "{rule[name]}
 	type: "external"
 	source: "Elastalert"
-	description: "Detects an Antivirus alert in a highly relevant file path or with a relevant"
+	description: "Detects an Antivirus alert in a highly relevant file path or with a relevant file name "
 	severity: "2"
 	tags: ["Security Alert", "Suspicious", "{match[event_id]}
 	tlp: 1

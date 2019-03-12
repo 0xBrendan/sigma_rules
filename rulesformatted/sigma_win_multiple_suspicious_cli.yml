@@ -4,10 +4,10 @@ alert:
 - slack
 - hivealerter
  
+doc_type: doc
 buffer_time:
   minutes: 5
 description: Detects multiple suspicious process in a limited timeframe
-doc_type: doc
 filter:
 - query:
     query_string:
@@ -41,7 +41,7 @@ hive_alert_config:
 	title: "{rule[name]}
 	type: "external"
 	source: "Elastalert"
-	description: "Detects multiple suspicious process in a limited timeframe"
+	description: "Detects multiple suspicious process in a limited timeframe "
 	severity: "4"
 	tags: ["Security Alert", "Suspicious", "{match[event_id]}
 	tlp: 1

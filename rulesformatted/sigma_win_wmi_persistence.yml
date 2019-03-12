@@ -30,7 +30,7 @@ hive_alert_config:
 	title: "{rule[name]}
 	type: "external"
 	source: "Elastalert"
-	description: "Detects suspicious WMI event filter and command line event consumer based"
+	description: "Detects suspicious WMI event filter and command line event consumer based on event id 5861 and 5859 (Windows 10, 2012 and higher) "
 	severity: "2"
 	tags: ["Security Alert", "Suspicious", "{match[event_id]}
 	tlp: 1

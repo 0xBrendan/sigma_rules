@@ -31,7 +31,7 @@ hive_alert_config:
 	title: "{rule[name]}
 	type: "external"
 	source: "Elastalert"
-	description: "Detects activity as "net user administrator /domain" and "net group domain"
+	description: "Detects activity as "net user administrator /domain" and "net group domain admins /domain" "
 	severity: "2"
 	tags: ["Security Alert", "Suspicious", "{match[event_id]}
 	tlp: 1

@@ -29,7 +29,7 @@ hive_alert_config:
 	title: "{rule[name]}
 	type: "external"
 	source: "Elastalert"
-	description: "Detects keywords that could indicate the use of some PowerShell exploitation"
+	description: "Detects keywords that could indicate the use of some PowerShell exploitation framework "
 	severity: "2"
 	tags: ["Security Alert", "Suspicious", "{match[event_id]}
 	tlp: 1

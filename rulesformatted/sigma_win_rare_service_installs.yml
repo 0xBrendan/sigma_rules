@@ -4,12 +4,12 @@ alert:
 - slack
 - hivealerter
  
+doc_type: doc
 buffer_time:
   days: 7
 description: Detects rare service installs that only appear a few times per time frame
   and could reveal password dumpers, backdoor installs or other types of malicious
   services
-doc_type: doc
 filter:
 - query:
     query_string:
@@ -37,7 +37,7 @@ hive_alert_config:
 	title: "{rule[name]}
 	type: "external"
 	source: "Elastalert"
-	description: "Detects rare service installs that only appear a few times per time frame"
+	description: "Detects rare service installs that only appear a few times per time frame and could reveal password dumpers, backdoor installs or other types of malicious services "
 	severity: "4"
 	tags: ["Security Alert", "Suspicious", "{match[event_id]}
 	tlp: 1

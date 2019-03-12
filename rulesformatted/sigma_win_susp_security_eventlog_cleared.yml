@@ -29,7 +29,7 @@ hive_alert_config:
 	title: "{rule[name]}
 	type: "external"
 	source: "Elastalert"
-	description: "Some threat groups tend to delete the local 'Security' Eventlog using"
+	description: "Some threat groups tend to delete the local 'Security' Eventlog using certain utitlities "
 	severity: "2"
 	tags: ["Security Alert", "Suspicious", "{match[event_id]}
 	tlp: 1

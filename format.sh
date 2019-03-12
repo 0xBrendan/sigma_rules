@@ -2,29 +2,41 @@
 mkdir rulesformatted
 cd sigmarules
 
-for copy in * ; do
+for copy in * ; do #makes copies of the sigmarules we are formatting instead of editing them directly
   cp $copy ../rulesformatted/$copy
 done
 
+prefix="description: " #values to check against later
+suffix="filter:"
+
 for entry in ../rulesformatted/*.yml ; do
 
-  if [ "$(sed -n '/description/{n;p}' $entry)" != "filter:" ]
+  doc=$(sed -n '/doc_type: /{p;q}' $entry)
+
+  if [ "$doc" != "" ] #checks if doc_type line exists
   then
-	echo $entry
-#	echo "$(sed -n 's/description: //p' $entry)"
-#	echo "$(sed -n '/description: /{n;p}' $entry)"
-#	read -p "continue"
+
+    sed -i "/$doc/d" $entry #delete old doc_type entry
+    sed -i "/- debug/a\\$doc" $entry #put new doc_type entry in location that doesn't mess up desc
+
   fi
 
-  sev=$(sed -n 's/priority: //p' $entry) #pushing priority level to assign to hive severity
-  desc=$(sed -n 's/description: //p' $entry) #pushing description to variable to include within hive
+  desc=$(sed -n '/^description:/,/filter:$/p' $entry) #extracts the text for description across multiple lines
+  desc=$(echo "$desc" | sed -e '1,/filter:/!d') #dedup for the description
+
+  desc=${desc#"$prefix"} #trims off "description:"
+  desc=${desc%"$suffix"} #trims off "filter:"
+
+  desc=$(echo "$desc" | tr '\n' ' ') #changes description to one liner
+
+  sev=$(sed -n '0,/priority: /s///p' $entry) #pushing priority level to assign to hive severity with dedup
   size=$(stat -c '%s' $entry) #count filesize used by truncate
 
-    truncate -s $(expr $size - 2) $entry #trim whitespace from initial conversion
+  truncate -s $(expr $size - 2) $entry #trim whitespace from initial conversion
 
     sed -i '1s;^;import: globalconfig.txt\n;' $entry #adding globalconfig reference at start of file
     sed -i '/globalconfig.txt/a\ ' $entry #adding new line after globalconfig
-    sed -i 's/- debug/- slack/g' $entry # replace debug alert types with slack and hive +  next 2 lines
+    sed -i 's/- debug/- slack/g' $entry # replace debug alert types with slack and hive + next 2 lines
     sed -i '/- slack/a\- hivealerter' $entry
     sed -i '/- hivealerter/a\ ' $entry
 
@@ -43,8 +55,8 @@ for entry in ../rulesformatted/*.yml ; do
     echo '	title: "{rule[name]}' >> $entry
     echo '	type: "external"' >> $entry
     echo '	source: "Elastalert"' >> $entry
-    echo '	description: ''"'$desc'"''' >> $entry
-    echo '	severity: ''"'$sev'"''' >> $entry
+    echo '	description: ''"'$desc'"''' >> $entry # adds 1 liner description for hive
+    echo '	severity: ''"'$sev'"''' >> $entry # adds severity
     echo '	tags: ["Security Alert", "Suspicious", "{match[event_id]}' >> $entry
     echo '	tlp: 1' >> $entry
     echo '	status: "New"' >> $entry

@@ -32,7 +32,7 @@ hive_alert_config:
 	title: "{rule[name]}
 	type: "external"
 	source: "Elastalert"
-	description: "Detects suspicious new RUN key element pointing to an executable in a"
+	description: "Detects suspicious new RUN key element pointing to an executable in a suspicious folder "
 	severity: "2"
 	tags: ["Security Alert", "Suspicious", "{match[event_id]}
 	tlp: 1

@@ -31,7 +31,7 @@ hive_alert_config:
 	title: "{rule[name]}
 	type: "external"
 	source: "Elastalert"
-	description: "Detects the creation of a named pipe used by known APT malware"
+	description: "Detects the creation of a named pipe used by known APT malware "
 	severity: "1"
 	tags: ["Security Alert", "Suspicious", "{match[event_id]}
 	tlp: 1
