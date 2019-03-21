@@ -41,26 +41,26 @@ for entry in ../rulesformatted/*.yml ; do
     sed -i '/- hivealerter/a\ ' $entry
 
     echo '' >> $entry # these append new lines for formatting
-    echo 'alert_text:' >> $entry #following code appends the fields we need to the end of the file
+    echo 'alert_text: "' >> $entry #following code appends the fields we need to the end of the file
 
     echo '	EventId: {0}\n' >> $entry
     echo '        Timestamp: {1}\n' >> $entry
-    echo '        Index: {2}\n' >> $entry
+    echo '        Index: {2}\n"' >> $entry
     echo '' >> $entry
     echo 'alert_text_args: ["event_id", "@timestamp","_id"]' >> $entry
     echo 'alert_text_type: alert_text_only' >> $entry
     echo '' >> $entry
 
     echo 'hive_alert_config:' >> $entry
-    echo '	title: "{rule[name]}' >> $entry
-    echo '	type: "external"' >> $entry
-    echo '	source: "Elastalert"' >> $entry
-    echo '	description: ''"'$desc'"''' >> $entry # adds 1 liner description for hive
-    echo '	severity: ''"'$sev'"''' >> $entry # adds severity
-    echo '	tags: ["Security Alert", "Suspicious", "{match[event_id]}' >> $entry
-    echo '	tlp: 1' >> $entry
-    echo '	status: "New"' >> $entry
-    echo '	follow: True' >> $entry
+    echo '    title: "{rule[name]}"' >> $entry
+    echo '    type: "external"' >> $entry
+    echo '    source: "Elastalert"' >> $entry
+    echo '    description: ''"'$desc'"''' >> $entry # adds 1 liner description for hive
+    echo '    severity: ''"'$sev'"''' >> $entry # adds severity
+    echo '    tags: ["Security Alert", "Suspicious", "{match[event_id]}"]' >> $entry
+    echo '    tlp: 1' >> $entry
+    echo '    status: "New"' >> $entry
+    echo '    follow: True' >> $entry
     echo '' >> $entry
 
     echo 'hive_observable_data_mapping:' >> $entry
