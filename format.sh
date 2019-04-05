@@ -65,9 +65,11 @@ for entry in ../rulesformatted/*.yml ; do
     echo '' >> $entry
 
     echo 'hive_observable_data_mapping:' >> $entry
-    echo '  - index: "{match[_index]}"' >> $entry
     echo '  - timestamp: "{match[@timestamp]}"' >> $entry
     echo '  - event id: "{match[event_id]}"' >> $entry
+    echo '  - log id: "{match[_id]}"' >> $entry
+    echo '  - index: "{match[_index]}"' >> $entry
+
     echo '' >> $entry
 
 done
