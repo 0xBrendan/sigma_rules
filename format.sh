@@ -45,9 +45,10 @@ for entry in ../rulesformatted/*.yml ; do
 
     echo '	EventId: {0}\n' >> $entry
     echo '        Timestamp: {1}\n' >> $entry
-    echo '        Index: {2}\n"' >> $entry
+    echo '        Log ID: {2}\n' >> $entry
+    echo '        Index: {3\n"' >> $entry
     echo '' >> $entry
-    echo 'alert_text_args: ["event_id", "@timestamp","_id"]' >> $entry
+    echo 'alert_text_args: ["event_id", "@timestamp","_id", "_index"]' >> $entry
     echo 'alert_text_type: alert_text_only' >> $entry
     echo '' >> $entry
 
