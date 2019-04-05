@@ -45,10 +45,13 @@ for entry in ../rulesformatted/*.yml ; do
 
     echo '	EventId: {0}\n' >> $entry
     echo '        Timestamp: {1}\n' >> $entry
-    echo '        Log ID: {2}\n' >> $entry
-    echo '        Index: {3\n"' >> $entry
+    echo '        Host: {2\n' >> $entry
+    echo '        Username: {3\n' >> $entry
+    echo '        Log ID: {4}\n' >> $entry
+    echo '        Index: {5\n"' >> $entry
+
     echo '' >> $entry
-    echo 'alert_text_args: ["event_id", "@timestamp","_id", "_index"]' >> $entry
+    echo 'alert_text_args: ["event_id", "@timestamp", "host_name", "user_name", "_id", "_index"]' >> $entry
     echo 'alert_text_type: alert_text_only' >> $entry
     echo '' >> $entry
 
@@ -67,6 +70,8 @@ for entry in ../rulesformatted/*.yml ; do
     echo 'hive_observable_data_mapping:' >> $entry
     echo '  - timestamp: "{match[@timestamp]}"' >> $entry
     echo '  - event id: "{match[event_id]}"' >> $entry
+    echo '  - host: "{match[host_name]}"' >> $entry
+    echo '  - username: "{match[user_name]}"' >> $entry
     echo '  - log id: "{match[_id]}"' >> $entry
     echo '  - index: "{match[_index]}"' >> $entry
 

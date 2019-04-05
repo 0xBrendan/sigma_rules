@@ -54,9 +54,12 @@ type: any
 alert_text: "
 	EventId: {0}\n
         Timestamp: {1}\n
-        Index: {2}\n"
+        Host: {2\n
+        Username: {3\n
+        Log ID: {4}\n
+        Index: {5\n"
 
-alert_text_args: ["event_id", "@timestamp","_id"]
+alert_text_args: ["event_id", "@timestamp", "host_name", "user_name", "_id", "_index"]
 alert_text_type: alert_text_only
 
 hive_alert_config:
@@ -71,7 +74,10 @@ hive_alert_config:
     follow: True
 
 hive_observable_data_mapping:
-  - index: "{match[_index]}"
   - timestamp: "{match[@timestamp]}"
   - event id: "{match[event_id]}"
+  - host: "{match[host_name]}"
+  - username: "{match[user_name]}"
+  - log id: "{match[_id]}"
+  - index: "{match[_index]}"
 
