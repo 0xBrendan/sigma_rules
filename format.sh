@@ -45,8 +45,8 @@ for entry in ../rulesformatted/*.yml ; do
 
     echo '	EventId: {0}\n' >> $entry
     echo '        Timestamp: {1}\n' >> $entry
-    echo '        Host: {2\n' >> $entry
-    echo '        Username: {3\n' >> $entry
+    echo '        Host: {2}\n' >> $entry
+    echo '        Username: {3}\n' >> $entry
     echo '        Log ID: {4}\n' >> $entry
     echo '        Index: {5\n"' >> $entry
 
