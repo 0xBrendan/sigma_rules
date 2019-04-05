@@ -20,8 +20,8 @@ type: any
 alert_text: "
 	EventId: {0}\n
         Timestamp: {1}\n
-        Host: {2\n
-        Username: {3\n
+        Host: {2}\n
+        Username: {3}\n
         Log ID: {4}\n
         Index: {5\n"
 
