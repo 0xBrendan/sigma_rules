@@ -48,7 +48,7 @@ for entry in ../rulesformatted/*.yml ; do
     echo '        Host: {2}\n' >> $entry
     echo '        Username: {3}\n' >> $entry
     echo '        Log ID: {4}\n' >> $entry
-    echo '        Index: {5\n"' >> $entry
+    echo '        Index: {5}\n"' >> $entry
 
     echo '' >> $entry
     echo 'alert_text_args: ["event_id", "@timestamp", "host_name", "user_name", "_id", "_index"]' >> $entry
