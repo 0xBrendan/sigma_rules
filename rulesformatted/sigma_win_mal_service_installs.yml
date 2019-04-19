@@ -36,7 +36,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects known malicious service installs that only appear in cases of lateral movement, credential dumping and other suspicious activity "
-    severity: "1"
+    severity: 1
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

@@ -60,7 +60,7 @@ for entry in ../rulesformatted/*.yml ; do
     echo '    type: "external"' >> $entry
     echo '    source: "Elastalert"' >> $entry
     echo '    description: ''"'$desc'"''' >> $entry # adds 1 liner description for hive
-    echo '    severity: ''"'$sev'"''' >> $entry # adds severity
+    echo '    severity: '''$sev'''' >> $entry # adds severity
     echo '    tags: ["Security Alert", "Suspicious", "{match[event_id]}"]' >> $entry
     echo '    tlp: 1' >> $entry
     echo '    status: "New"' >> $entry

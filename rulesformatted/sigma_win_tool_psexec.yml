@@ -35,7 +35,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects PsExec service installation and execution events (service and Sysmon) "
-    severity: "4"
+    severity: 4
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

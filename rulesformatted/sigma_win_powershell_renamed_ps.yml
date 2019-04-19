@@ -34,7 +34,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects copying and renaming of powershell.exe before execution (RETEFE malware DOC/macro starting Sept 2018) "
-    severity: "2"
+    severity: 2
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

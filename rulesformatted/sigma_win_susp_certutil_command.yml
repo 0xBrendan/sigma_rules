@@ -37,7 +37,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects a suspicious Microsoft certutil execution with sub commands like 'decode' sub command, which is sometimes used to decode malicious code with the built-in certutil utility "
-    severity: "2"
+    severity: 2
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

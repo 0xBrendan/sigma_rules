@@ -67,7 +67,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects javaw.exe in AppData folder as used by Adwind / JRAT "
-    severity: "2"
+    severity: 2
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

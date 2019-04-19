@@ -45,7 +45,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects the usage and installation of a backdoor that uses an option to register a malicious debugger for built-in tools that are accessible in the login screen "
-    severity: "1"
+    severity: 1
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

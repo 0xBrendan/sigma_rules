@@ -34,7 +34,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects the usage of Sysinternals Tools due to accepteula key beeing added to Registry "
-    severity: "4"
+    severity: 4
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

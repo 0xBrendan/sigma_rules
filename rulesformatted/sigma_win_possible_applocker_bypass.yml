@@ -34,7 +34,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects execution of executables that can be used to bypass Applocker whitelisting "
-    severity: "4"
+    severity: 4
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

@@ -33,7 +33,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "One of the Windows Eventlogs has been cleared. e.g. caused by "wevtutil cl" command execution "
-    severity: "3"
+    severity: 3
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

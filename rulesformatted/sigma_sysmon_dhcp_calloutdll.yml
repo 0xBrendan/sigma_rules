@@ -35,7 +35,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects the installation of a Callout DLL via CalloutDlls and CalloutEnabled parameter in Registry, which can be used to execute code in context of the DHCP server (restart required) "
-    severity: "2"
+    severity: 2
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

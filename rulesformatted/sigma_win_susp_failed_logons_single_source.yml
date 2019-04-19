@@ -64,7 +64,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects suspicious failed logins with different user accounts from a single source system "
-    severity: "3"
+    severity: 3
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

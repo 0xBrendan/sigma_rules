@@ -34,7 +34,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects suspicious use of calc.exe with command line parameters or in a suspicious directory, which is likely caused by some PoC or detection evasion "
-    severity: "2"
+    severity: 2
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

@@ -34,7 +34,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects suspicious a certutil command that used to encode files, which is sometimes used for data exfiltration "
-    severity: "3"
+    severity: 3
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

@@ -44,7 +44,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects a set of commands often used in recon stages by different attack groups "
-    severity: "3"
+    severity: 3
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

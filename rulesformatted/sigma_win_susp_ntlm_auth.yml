@@ -33,7 +33,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects logons using NTLM, which could be caused by a legacy source or attackers "
-    severity: "4"
+    severity: 4
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

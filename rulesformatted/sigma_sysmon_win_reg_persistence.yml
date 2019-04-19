@@ -35,7 +35,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects persistence registry keys "
-    severity: "1"
+    severity: 1
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

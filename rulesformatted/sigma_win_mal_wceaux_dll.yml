@@ -33,7 +33,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects wceaux.dll access while WCE pass-the-hash remote command execution on source host "
-    severity: "1"
+    severity: 1
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

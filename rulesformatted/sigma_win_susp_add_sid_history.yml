@@ -32,7 +32,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "An attacker can use the SID history attribute to gain additional privileges. "
-    severity: "3"
+    severity: 3
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"

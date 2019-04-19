@@ -36,7 +36,7 @@ hive_alert_config:
     type: "external"
     source: "Elastalert"
     description: "Detects the addition of a SSP to the registry. Upon a reboot or API call, SSP DLLs gain access to encrypted and plaintext passwords stored in Windows. "
-    severity: "1"
+    severity: 1
     tags: ["Security Alert", "Suspicious", "{match[event_id]}"]
     tlp: 1
     status: "New"
